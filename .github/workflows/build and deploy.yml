@@ -11,7 +11,7 @@ on:
 env:
   PROJECT_PATH: 'PublishNugetPackageDemo/PublishNugetPackageDemo.csproj'
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
-  NUGET_SOURCE_URL: 'https://github.com/Dom21Nguyen/index.json'
+  NUGET_SOURCE_URL: 'https://nuget.pkg.github.com/Dom21Nguyen/index.json'
  # NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
 
 jobs:
