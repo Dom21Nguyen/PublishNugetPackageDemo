@@ -50,7 +50,7 @@ jobs:
     - name: 'Push package'
       run: |
           foreach($file in (Get-ChildItem "${{ env.PACKAGE_OUTPUT_DIRECTORY }}" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --source "https://nuget.pkg.github.com/Dom21Nguyen/index.json" --skip-duplicate
+              dotnet nuget push $file --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --source "https://api.nuget.org/v3/index.json" --skip-duplicate
           }
     
       #run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate
