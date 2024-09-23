@@ -39,7 +39,7 @@ jobs:
       uses: battila7/get-version-action@v2.2.1
 
     - name: Add nuget source
-      run: dotnet nuget add source --username Dom21Nguyen --password NpNg@2024 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
+      run: dotnet nuget add source --username Dom21Nguyen --password "NpNg@2024" --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
     - name: 'Pack project'
       #run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
       run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols  --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
