@@ -1,0 +1,59 @@
+name: "Deploy to NuGet"
+
+on:
+  workflow_dispatch:
+    inputs:
+        branch:
+          description: 'Branch to deploy'
+          required: true
+          default: 'main'
+
+env:
+  PROJECT_PATH: 'PublishNugetPackageDemo/PublishNugetPackageDemo.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  #NUGET_SOURCE_URL: 'https://github.com/Dom21Nguyen/index.json'
+  NUGET_SOURCE_URL: 'https://nuget.pkg.github.com/Dom21Nguyen/index.json'
+  #NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
+
+jobs:
+  deploy:
+    name: 'Deploy'
+    runs-on: 'windows-latest'
+    steps:
+    - name: 'Checkout'
+      uses: actions/checkout@v4
+
+    - name: 'Install dotnet'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: 'Restore packages'
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+
+    - name: 'Build project'
+      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+
+    - name: 'Get Version'
+      id: version
+      uses: battila7/get-version-action@v2.2.1
+
+    - name: Add nuget source
+      run: dotnet nuget add source --username Dom21Nguyen --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
+    - name: 'Pack project'
+      #run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+      run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols  --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+    - name: Show output files
+      run: | 
+        echo "Shows out files"
+         ls ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+       
+    - name: 'Push package'
+      run: |
+          foreach($file in (Get-ChildItem "${{ env.PACKAGE_OUTPUT_DIRECTORY }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --source "https://nuget.pkg.github.com/Dom21Nguyen/index.json" --skip-duplicate
+          }
+    
+      #run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate
+      #run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --source ${{ env.NUGET_SOURCE_URL }} --skip-duplicate
