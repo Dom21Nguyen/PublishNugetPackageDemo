@@ -40,7 +40,7 @@ jobs:
 
     - name: Add nuget source
       run: dotnet nuget add source --username Dom21Nguyen --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Dom21Nguyen/index.json"
-		
+      
     - name: 'Pack project'
       #run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
       run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols  --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
