@@ -44,7 +44,6 @@ jobs:
 
         - name: Add nuget source
           run: dotnet nuget add source --username Dom21Nguyen --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
-        - name: 'Pack project'
     
         - name: Restore dependencies
           run: dotnet restore
