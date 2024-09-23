@@ -1,4 +1,4 @@
-name: "Deploy to NuGet"
+name: "deploy gh-pkg2"
 
 on:
   workflow_dispatch:
@@ -43,7 +43,7 @@ jobs:
             dotnet-version: '8.0.x'
 
         - name: Add nuget source
-          run: dotnet nuget add source --username Dom21Nguyen --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
+          run: dotnet nuget add source --username Dom21Nguyen --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Dom21Nguyen/index.json"
     
         - name: Restore dependencies
           run: dotnet restore
