@@ -53,7 +53,7 @@ jobs:
     - name: 'Push package'
       run: |
           foreach($file in (Get-ChildItem "${{ env.PACKAGE_OUTPUT_DIRECTORY }}" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --source "https://nuget.pkg.github.com/Dom21Nguyen/index.json" --skip-duplicate --api-key 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
+              dotnet nuget push $file --source "https://nuget.pkg.github.com/Dom21Nguyen/index.json" --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }}
           }
     
       #run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate
