@@ -39,7 +39,7 @@ jobs:
       uses: battila7/get-version-action@v2.2.1
 
     - name: Add nuget source
-      run: dotnet nuget add source --username Dom21Nguyen --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Dom21Nguyen/index.json"
+      run: dotnet nuget add source --username Dom21Nguyen --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Dom21Nguyen/index.json"
       
     - name: 'Pack project'
       #run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
@@ -53,7 +53,7 @@ jobs:
     - name: 'Push package'
       run: |
           foreach($file in (Get-ChildItem "${{ env.PACKAGE_OUTPUT_DIRECTORY }}" -Recurse -Include *.nupkg)) {
-              dotnet nuget push $file --api-key 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 --source "https://nuget.pkg.github.com/Dom21Nguyen/index.json" --skip-duplicate
+              dotnet nuget push $file --api-key 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 --source "https://nuget.pkg.github.com/Dom21Nguyen/index.json" --skip-duplicate
           }
     
       #run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --api-key ${{ secrets.NUGET_AUTH_TOKEN }} --skip-duplicate
